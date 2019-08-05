@@ -2,9 +2,10 @@ extern crate argparse;
 extern crate term;
 extern crate rust_util;
 
-use argparse::{ArgumentParser, StoreTrue, Store};
+mod opt;
 
 use rust_util::*;
+use opt::*;
 
 use std::{
     fs::File,
@@ -46,42 +47,6 @@ pub fn get_term_width_message(message: &str, left: usize) -> String {
             s.push_str(&message[find_char_boundary(&message, len-10)..]);
             s
         },
-    }
-}
-
-
-struct Options {
-    version: bool,
-    verbose: bool,
-    dry_run: bool,
-    search_text: String,
-    replace_text: String,
-}
-
-impl Options {
-    fn new() -> Options {
-        Options {
-            version: false,
-            verbose: false,
-            dry_run: false,
-            search_text: String::new(),
-            replace_text: String::new(),
-        }
-    }
-
-    fn new_and_parse_args() -> Options {
-        let mut options = Options::new();
-        {
-            let mut ap = ArgumentParser::new();
-            ap.set_description("replacing - command line replace tool.");
-            ap.refer(&mut options.version).add_option(&["-v", "--version"], StoreTrue, "Print version");
-            ap.refer(&mut options.verbose).add_option(&["--verbose"], StoreTrue, "Verbose");
-            ap.refer(&mut options.dry_run).add_option(&["--dry-run"], StoreTrue, "Dry run");
-            ap.refer(&mut options.search_text).add_argument("SEARCH TEXT", Store, "Search text");
-            ap.refer(&mut options.replace_text).add_argument("REPLACE TEXT", Store, "Replace text");
-            ap.parse_args_or_exit();
-        }
-        options
     }
 }
 
