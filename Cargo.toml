@@ -1,0 +1,13 @@
+[package]
+name = "replacing"
+version = "0.1.0"
+authors = ["Hatter Jiang@Pixelbook <jht5945@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+argparse = "0.2.2"
+term = "0.5.2"
+rust_util = { git = "https://github.com/jht5945/rust_util" }
+
