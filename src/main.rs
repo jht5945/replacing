@@ -113,12 +113,12 @@ fn replace_files(options: &Options, dir_path: &Path) -> XResult<()> {
         if file_content.contains(&options.search_text) {
             // FOUND
             if options.dry_run {
-                print_lastline("");
+                clear_lastline();
                 print_message(MessageType::OK, &format!("Dry run: {}", p_str));
                 return;
             }
 
-            print_lastline("");
+            clear_lastline();
             print_message(MessageType::OK, &format!("Write file: {}", p_str));
             let replaced_file_content = file_content.replace(&options.search_text, &options.replace_text);
             println!("{}", file_content);
@@ -151,6 +151,7 @@ fn replace_files(options: &Options, dir_path: &Path) -> XResult<()> {
         }
         true
     }).unwrap_or(());
+    clear_lastline();
     Ok(())
 }
 
