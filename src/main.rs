@@ -16,14 +16,14 @@ use std::{
 
 pub fn read_file_content(file: &Path, large_file_len: u64) -> XResult<String> {
     if ! file.exists() {
-        return Err(new_box_error(&format!("File not exists: {:?}", file)));
+        return Err(new_box_ioerror(&format!("File not exists: {:?}", file)));
     }
     if ! file.is_file() {
-        return Err(new_box_error(&format!("File is not file: {:?}", file)));
+        return Err(new_box_ioerror(&format!("File is not file: {:?}", file)));
     }
     let file_len = file.metadata()?.len();
     if file_len > large_file_len {
-        return Err(new_box_error(&format!("File too large: {:?}, len: {}", file, file_len)));
+        return Err(new_box_ioerror(&format!("File too large: {:?}, len: {}", file, file_len)));
     }
     let mut f = File::open(file)?;
     let mut content = String::new();
@@ -36,7 +36,6 @@ pub fn write_file_content(file: &Path, content: &str) -> XResult<()> {
     let mut f = File::create(file)?;
     f.write_all(content.as_ref())?;
     f.sync_all()?;
-
     Ok(())
 }
 
